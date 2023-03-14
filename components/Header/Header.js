@@ -7,8 +7,9 @@ export default function Header({ callback, state }) {
   return (
     <View
       style={{
+        width: "100%",
         paddingTop: 50,
-        paddingHorizontal: 10,
+        paddingHorizontal: 0,
         justifyContent: "space-between",
         alignItems: "center",
         flexDirection: "row",

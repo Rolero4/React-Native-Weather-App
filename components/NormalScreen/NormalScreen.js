@@ -5,7 +5,6 @@ import WeatherIcon from "../Shared/WeatherIcon";
 export default function NormalScreen({ weather }) {
   return (
     <View style={styles.container}>
-      <WeatherIcon icon={weather.icon}></WeatherIcon>
       <View style={styles.tileContainer}>
         <Tile icon={0} value={weather.temperature}></Tile>
         <Tile icon={1} value={weather.pressure}></Tile>

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
     width: "90%",
-    height: "8%",
+    height: "10%",
     overflow: "auto",
   },
 

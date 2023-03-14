@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     justifyContent: "center",
-    width: "43%",
+    width: "40%",
     aspectRatio: 1,
     marginHorizontal: 5,
     marginVertical: 10,

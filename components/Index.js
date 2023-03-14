@@ -5,6 +5,7 @@ import NormalScreen from "./NormalScreen/NormalScreen";
 import FocusScreen from "./FocusScreen/FocusScreen";
 import Search from "./Shared/Search";
 import Description from "./Shared/Description";
+import WeatherIcon from "./Shared/WeatherIcon";
 import { Weather } from "./Shared/weatherInfo.model";
 import { WeatherApiUrl } from "./Shared/api";
 import { WeatherApiKey } from "./Shared/api";
@@ -52,10 +53,11 @@ export default function Index() {
   };
 
   return (
-    <View style={styles.componentsContainer}>
+    <View style={styles.appContainer}>
       <Header callback={changeView} state={focus}></Header>
-      <View style={styles.appContainer}>
+      <View style={styles.weatherContainer}>
         <Search onSubmit={getWeather} onChange={changeCity}></Search>
+        <WeatherIcon icon={weather.icon}></WeatherIcon>
         <View style={styles.screenContainer}>
           {!focus ? (
             <NormalScreen weather={weather}></NormalScreen>
@@ -71,22 +73,24 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  componentsContainer: {
+  appContainer: {
     flexDirection: "column",
     backgroundColor: "#0F3B5F",
     height: "100%",
     width: "100%",
   },
 
-  appContainer: {
-    height: "85%",
+  weatherContainer: {
+    height: "70%",
     width: "100%",
     alignItems: "center",
   },
 
   screenContainer: {
     width: "100%",
-    height: "70%",
+    height: "60%",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
