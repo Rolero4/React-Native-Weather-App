@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet } from "react-native";
-import WeatherIcon from "../Shared/WeatherIcon";
 import Row from "./focusComponents/Row";
 
 export default function FocusScreen({ weather }) {

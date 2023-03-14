@@ -1,14 +1,17 @@
-import { View, Text, StatusBar, StyleSheet } from "react-native";
+import { View, StatusBar, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import Header from "./Header/Header";
 import NormalScreen from "./NormalScreen/NormalScreen";
 import FocusScreen from "./FocusScreen/FocusScreen";
-import Search from "./Shared/Search";
-import Description from "./Shared/Description";
-import WeatherIcon from "./Shared/WeatherIcon";
-import { Weather } from "./Shared/weatherInfo.model";
-import { WeatherApiUrl } from "./Shared/api";
-import { WeatherApiKey } from "./Shared/api";
+import Search from "./Shared/components/Search";
+import Description from "./Shared/components/Description";
+import WeatherIcon from "./Shared/components/WeatherIcon";
+import Coordinates from "./Shared/components/Coordinates";
+
+import { Weather } from "./Shared/models/weatherInfo.model";
+import { WeatherApiUrl } from "./Shared/api/api";
+import { WeatherApiKey } from "./Shared/api/api";
+import { Info } from "./Shared/models/otherInfo.model";
 
 export default function Index() {
   // change view
@@ -24,9 +27,9 @@ export default function Index() {
   };
 
   // weather info
-  const [weather, setWeather] = useState(
-    new Weather("unknown", "?", "?", "?", "?", "?")
-  );
+  const [weather, setWeather] = useState(new Weather("?", "?", "?", "?"));
+  // other info
+  const [info, setInfo] = useState(new Info("unknown", "?", "?", "?"));
 
   const getWeather = () => {
     fetch(
@@ -36,10 +39,8 @@ export default function Index() {
       .then((data) => {
         setWeather(
           new Weather(
-            data.weather[0].icon,
             data.main.temp.toFixed() + "\u00b0C",
             data.main.pressure + "hPa",
-            data.weather[0].description,
             new Date(
               data.sys.sunrise * 1000 + data.timezone * 1000
             ).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
@@ -48,8 +49,19 @@ export default function Index() {
             ).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
           )
         );
+        setInfo(
+          new Info(
+            data.weather[0].icon,
+            data.coord.lat,
+            data.coord.lon,
+            data.weather[0].description
+          )
+        );
       })
-      .catch(() => setWeather(new Weather("unknown", "?", "?", "?", "?", "?")));
+      .catch(() => {
+        setWeather(new Weather("?", "?", "?", "?"));
+        setInfo(new Info("unknown", "?", "?", "?"));
+      });
   };
 
   return (
@@ -57,7 +69,8 @@ export default function Index() {
       <Header callback={changeView} state={focus}></Header>
       <View style={styles.weatherContainer}>
         <Search onSubmit={getWeather} onChange={changeCity}></Search>
-        <WeatherIcon icon={weather.icon}></WeatherIcon>
+        <Coordinates lat={info.latitude} lon={info.longitude}></Coordinates>
+        <WeatherIcon icon={info.icon}></WeatherIcon>
         <View style={styles.screenContainer}>
           {!focus ? (
             <NormalScreen weather={weather}></NormalScreen>
@@ -65,7 +78,7 @@ export default function Index() {
             <FocusScreen weather={weather}></FocusScreen>
           )}
         </View>
-        <Description info={weather.description}></Description>
+        <Description info={info.description}></Description>
       </View>
       <StatusBar style="auto" />
     </View>
@@ -88,7 +101,7 @@ const styles = StyleSheet.create({
 
   screenContainer: {
     width: "100%",
-    height: "60%",
+    height: "55%",
     alignItems: "center",
     justifyContent: "center",
   },

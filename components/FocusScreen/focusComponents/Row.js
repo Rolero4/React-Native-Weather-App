@@ -1,13 +1,6 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 export default function Row({ value, name }) {
-  var icons = [
-    require("../../../assets/icons/tempreture.png"),
-    require("../../../assets/icons/pressure.png"),
-    require("../../../assets/icons/sunrise.png"),
-    require("../../../assets/icons/sunset.png"),
-  ];
-
   return (
     <View style={styles.container}>
       <Text style={styles.elementName}>{name}</Text>

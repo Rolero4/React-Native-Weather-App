@@ -1,6 +1,5 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Tile from "./normalComponents/Tile";
-import WeatherIcon from "../Shared/WeatherIcon";
 
 export default function NormalScreen({ weather }) {
   return (
